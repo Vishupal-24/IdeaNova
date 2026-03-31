@@ -5,6 +5,7 @@
 # 🚀 CareerLeap AI: Your Engineering Career Co-Pilot
 
 🔗 Live Demo: careerleap-ai.netlify.app
+
 CareerLeap AI is an intelligent, personalized platform built to navigate the complexities of an engineering journey. From choosing a specialization to crafting a job-ready resume, it serves as a 24/7 mentor for the next generation of engineers.
 
 [](https://github.com/vishupal-24)
