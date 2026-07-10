@@ -1,28 +1,12 @@
+
 <div align="center">
-
-# 🚀 CareerLeap AI
-
-### Your AI-Powered Engineering Career Co-Pilot
-
-**From choosing a specialization to landing an internship — one platform, powered by Google Gemini.**
-
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Firebase Genkit](https://img.shields.io/badge/Firebase-Genkit-FFCA28?style=flat-square&logo=firebase&logoColor=black)](https://firebase.google.com/docs/genkit)
-[![Google Gemini](https://img.shields.io/badge/Google-Gemini-4285F4?style=flat-square&logo=google&logoColor=white)](https://ai.google.dev/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](#-license)
-
-[Live Demo](#-live-demo) • [Features](#-key-features) • [AI Capabilities](#-ai-capabilities) • [Tech Stack](#-tech-stack) • [Installation](#-installation) • [Usage](#-usage)
-
-</div>
 
 <details>
 <summary><strong>📚 Table of Contents</strong></summary>
 
-1. [About](#-about)
-2. [Why I Built CareerLeap AI](#-why-i-built-careerleap-ai)
+[About](#-about)
+
+1. [Why I Built CareerLeap AI](#-why-i-built-careerleap-ai)
 3. [Live Demo](#-live-demo)
 4. [Application Walkthrough](#-application-walkthrough)
 5. [Key Features](#-key-features)
@@ -33,7 +17,7 @@
 10. [Environment Variables](#-environment-variables)
 11. [Usage](#-usage)
 12. [Project Structure](#-project-structure)
-13. [Performance & Code Quality](#-performance--code-quality)
+13. [Performance &amp; Code Quality](#-performance--code-quality)
 14. [Engineering Challenges](#-engineering-challenges)
 15. [Future Improvements](#️-future-improvements)
 16. [Contributing](#-contributing)
@@ -63,74 +47,133 @@ CareerLeap AI attempts to unify these workflows into one AI-powered platform tha
 
 ## 🔴 Live Demo
 
-**[🚀 View Live Demo](https://careerleap-ai-qaqj.onrender.com/dashboard)** 
+**[🚀 View Live Demo](https://careerleap-ai-qaqj.onrender.com/dashboard)**
 
 ---
 
-## 📸 Screenshots
+## 📸 Application Walkthrough
 
-<div align="center">
+A guided tour through CareerLeap AI's core screens, from the first dashboard view to internship applications.
+*(Screenshots below are placeholders — add real captures to `docs/screenshots/` before publishing.)*
 
-|                                     Dashboard                                     |                                    AI Mentor                                    |
-| :---------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| ![Dashboard](docs/screenshots/dashboard.png) | ![AI Mentor](docs/screenshots/ai-mentor.png) |
+---
 
-|                                 Career Pathway                                 |                                Resume Builder                                |
-| :-------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
-| ![Career Pathway](docs/screenshots/career-pathway.png) | ![Resume Builder](docs/screenshots/resume-builder.png) |
+### 🏠 Dashboard
 
-|                                    Internship Recommendations                                    |                                 College Guidance                                 |
-| :--------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: |
-| ![Internships](docs/screenshots/internships.png) | ![Colleges](docs/screenshots/colleges.png) |
+The landing view after opening the app. It surfaces a skills-progress chart, quick-action shortcuts, and a personalized suggestions panel — a single-glance summary of where a student stands.
 
-|                                Settings                               |
-| :------------------------------------------------------------------: |
-| ![Settings](docs/screenshots/settings.png) |
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="900">
+</p>
 
-</div>
+---
 
-> 📌 **Note:** Add real screenshots to `docs/screenshots/` and update the paths above — the app currently redirects `/` straight to the Dashboard, so there is no separate marketing landing page to capture.
+### 🤖 AI Mentor
+
+A live chat interface, powered by Google Gemini, that answers open-ended career questions in real time. Failed responses stay visible with a retry option, so a slow or dropped request never loses what was typed.
+
+<p align="center">
+  <img src="docs/screenshots/ai-mentor.png" alt="AI Mentor" width="900">
+</p>
+
+---
+
+### 🛣 Career Pathway
+
+Generates a personalized, milestone-based roadmap — a mix of courses, projects, and internships — for any stated career goal, rendered as a visual timeline.
+
+<p align="center">
+  <img src="docs/screenshots/career-pathway.png" alt="Career Pathway" width="900">
+</p>
+
+---
+
+### 📄 Resume Builder
+
+Turns pasted resume content into a polished, AI-generated professional summary. The draft is remembered automatically and reused later in the Internship Apply workflow.
+
+<p align="center">
+  <img src="docs/screenshots/resume-builder.png" alt="Resume Builder" width="900">
+</p>
+
+---
+
+### 💼 Internship Recommendations
+
+Matches a candidate's skills, interests, and location against a curated list of real internships, then opens a dedicated workspace for resume match scoring, AI cover letter drafting, and application tracking.
+
+<p align="center">
+  <img src="docs/screenshots/internships.png" alt="Internship Recommendations" width="900">
+</p>
+
+---
+
+### 🎓 College Guidance
+
+A searchable, filterable directory of real engineering colleges, with admission exam details and a direct link to each institution's official website.
+
+<p align="center">
+  <img src="docs/screenshots/colleges.png" alt="College Guidance" width="900">
+</p>
+
+---
+
+### ⚙️ Settings
+
+A dedicated profile page for managing account details, kept as its own route so it never interrupts the main dashboard's flow.
+
+<p align="center">
+  <img src="docs/screenshots/settings.png" alt="Settings" width="900">
+</p>
 
 ---
 
 ## ✨ Key Features
 
 ### 🤖 AI Features
-| Feature | Description |
-|---|---|
-| **AI Career Mentor** | Live chat interface answering open-ended career questions, powered by Gemini |
-| **AI Specialization Guidance** | Interactive quiz mapping interests & personality traits to an engineering branch |
-| **AI Career Pathway Generator** | Generates a 3–5 milestone roadmap (courses, projects, internships, skills) for any career goal |
-| **AI Project Idea Generator** | Suggests portfolio-ready project ideas with recommended tech stacks |
-| **AI Resume Summary Generator** | Turns pasted resume content into a polished professional summary |
-| **AI Internship Matching** | Ranks a curated internship list against a candidate's skills, interest, and location |
-| **AI Resume-to-Internship Match Score** | Scores a resume against one specific internship, with strengths and gaps |
-| **AI Cover Letter Generator** | Drafts a tailored, ready-to-edit cover letter for a specific internship |
+
+| Feature                                       | Description                                                                                     |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **AI Career Mentor**                    | Live chat interface answering open-ended career questions, powered by Gemini                    |
+| **AI Specialization Guidance**          | Interactive quiz mapping interests & personality traits to an engineering branch                |
+| **AI Career Pathway Generator**         | Generates a 3–5 milestone roadmap (courses, projects, internships, skills) for any career goal |
+| **AI Project Idea Generator**           | Suggests portfolio-ready project ideas with recommended tech stacks                             |
+| **AI Resume Summary Generator**         | Turns pasted resume content into a polished professional summary                                |
+| **AI Internship Matching**              | Ranks a curated internship list against a candidate's skills, interest, and location            |
+| **AI Resume-to-Internship Match Score** | Scores a resume against one specific internship, with strengths and gaps                        |
+| **AI Cover Letter Generator**           | Drafts a tailored, ready-to-edit cover letter for a specific internship                         |
 
 ### 🎯 Career Development
+
 - Specialization guidance quiz with AI-backed reasoning
 - Visual, milestone-based career pathway timeline
 
 ### 📄 Resume Tools
+
 - AI-generated resume summaries
 - One resume draft, reused automatically across the Resume Builder and Internship "Prepare & Apply" flow (persisted locally per browser)
 
 ### 💼 Internship Discovery
+
 - AI-powered recommendations *and* a plain browsable board — real listings from real companies (TCS, Reliance Jio, Tata Steel, Wipro, Infosys, HDFC Bank, L&T, Tech Mahindra), each linking to that company's actual careers page
 - A dedicated **Apply workspace** per internship: full details, an instant heuristic skill-overlap score, an AI-generated match score with strengths/gaps, AI cover letter drafting with copy-to-clipboard, bookmarking, and an honest "Mark as Applied" tracker (this app never submits a fake application anywhere — it prepares you, then hands off to the real employer site)
 
 ### 🎓 College Guidance
+
 - Directory of real engineering colleges (IITs, NITs, BITS Pilani, VIT, MNIT)
 - Search by name/city/state and filter by branch
 - Detail view with admission exam, founding year, and a link to the college's real official website
 
 ### 📊 Dashboard
+
 - Skills-progress chart, quick-action shortcuts, and a personalized suggestions panel
 
 ### 🎮 Gamification
+
 - Points, badges, and a leaderboard *(currently demo data — not yet wired to real user activity; see [Future Improvements](#-future-improvements))*
 
 ### 🌓 User Experience
+
 - Full dark/light theming
 - Responsive sidebar (collapsible rail on desktop, slide-over sheet on mobile)
 - Every AI action has a request timeout, graceful error toasts, and retry affordances — no feature can hang indefinitely on a slow or failed model call
@@ -150,16 +193,16 @@ This means every model response is **schema-validated** before it ever reaches t
 <details>
 <summary><strong>📋 All 8 Genkit flows in this project</strong></summary>
 
-| Flow | File | Purpose |
-|---|---|---|
-| `suggestStream` | `src/ai/flows/suggest-stream.ts` | Recommends an engineering specialization from interests + personality |
-| `suggestCareerPathway` | `src/ai/flows/suggest-career-pathway.ts` | Generates a milestone-based career roadmap |
-| `suggestProjectIdea` | `src/ai/flows/suggest-project-idea.ts` | Generates portfolio project ideas for a field of interest |
-| `suggestResumeSummary` | `src/ai/flows/suggest-resume-summary.ts` | Writes a professional resume summary from pasted content |
-| `provideCareerMentorship` | `src/ai/flows/provide-career-mentorship.ts` | Free-form career Q&A chat |
-| `suggestInternships` | `src/ai/flows/suggest-internships.ts` | Ranks internships against a candidate profile |
-| `matchResumeToInternship` | `src/ai/flows/match-resume-to-internship.ts` | Scores a resume against one specific internship |
-| `generateCoverLetter` | `src/ai/flows/generate-cover-letter.ts` | Drafts a cover letter tailored to one internship |
+| Flow                        | File                                           | Purpose                                                               |
+| --------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
+| `suggestStream`           | `src/ai/flows/suggest-stream.ts`             | Recommends an engineering specialization from interests + personality |
+| `suggestCareerPathway`    | `src/ai/flows/suggest-career-pathway.ts`     | Generates a milestone-based career roadmap                            |
+| `suggestProjectIdea`      | `src/ai/flows/suggest-project-idea.ts`       | Generates portfolio project ideas for a field of interest             |
+| `suggestResumeSummary`    | `src/ai/flows/suggest-resume-summary.ts`     | Writes a professional resume summary from pasted content              |
+| `provideCareerMentorship` | `src/ai/flows/provide-career-mentorship.ts`  | Free-form career Q&A chat                                             |
+| `suggestInternships`      | `src/ai/flows/suggest-internships.ts`        | Ranks internships against a candidate profile                         |
+| `matchResumeToInternship` | `src/ai/flows/match-resume-to-internship.ts` | Scores a resume against one specific internship                       |
+| `generateCoverLetter`     | `src/ai/flows/generate-cover-letter.ts`      | Drafts a cover letter tailored to one internship                      |
 
 </details>
 
@@ -169,22 +212,22 @@ The model is configured once, in `src/ai/genkit.ts`, and shared by every flow �
 
 ## 🛠 Tech Stack
 
-| Category | Technology |
-|---|---|
-| **Framework** | [Next.js 15](https://nextjs.org/) (App Router, Turbopack dev server) |
-| **UI Library** | [React 18](https://react.dev/) |
-| **Language** | [TypeScript](https://www.typescriptlang.org/) |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) |
-| **Component Library** | [shadcn/ui](https://ui.shadcn.com/) (built on Radix UI primitives) |
-| **AI Orchestration** | [Firebase Genkit](https://firebase.google.com/docs/genkit) |
-| **LLM Provider** | [Google Gemini](https://ai.google.dev/) via `@genkit-ai/googleai` |
+| Category                     | Technology                                                              |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| **Framework**          | [Next.js 15](https://nextjs.org/) (App Router, Turbopack dev server)     |
+| **UI Library**         | [React 18](https://react.dev/)                                           |
+| **Language**           | [TypeScript](https://www.typescriptlang.org/)                            |
+| **Styling**            | [Tailwind CSS](https://tailwindcss.com/)                                 |
+| **Component Library**  | [shadcn/ui](https://ui.shadcn.com/) (built on Radix UI primitives)       |
+| **AI Orchestration**   | [Firebase Genkit](https://firebase.google.com/docs/genkit)               |
+| **LLM Provider**       | [Google Gemini](https://ai.google.dev/) via `@genkit-ai/googleai`      |
 | **Forms & Validation** | [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) |
-| **Icons** | [Lucide React](https://lucide.dev/) |
-| **Charts** | [Recharts](https://recharts.org/) |
-| **Theming** | [next-themes](https://github.com/pacocoursey/next-themes) |
-| **Carousel** | [Embla Carousel](https://www.embla-carousel.com/) |
-| **Styling Utilities** | `clsx`, `tailwind-merge`, `class-variance-authority` |
-| **Linting** | ESLint (`next/core-web-vitals`, `next/typescript`) |
+| **Icons**              | [Lucide React](https://lucide.dev/)                                      |
+| **Charts**             | [Recharts](https://recharts.org/)                                        |
+| **Theming**            | [next-themes](https://github.com/pacocoursey/next-themes)                |
+| **Carousel**           | [Embla Carousel](https://www.embla-carousel.com/)                        |
+| **Styling Utilities**  | `clsx`, `tailwind-merge`, `class-variance-authority`              |
+| **Linting**            | ESLint (`next/core-web-vitals`, `next/typescript`)                  |
 
 ---
 
@@ -214,6 +257,7 @@ flowchart TD
 ## ⚙️ Installation
 
 ### Prerequisites
+
 - **Node.js** v18.0.0 or higher
 - **npm** (or your package manager of choice)
 - A **Google Gemini API key** — get one free at [Google AI Studio](https://aistudio.google.com/app/apikey)
@@ -261,9 +305,9 @@ npm run genkit:watch   # auto-restart on flow file changes
 
 ## 🔑 Environment Variables
 
-| Variable | Required | Description |
-|---|:---:|---|
-| `GEMINI_API_KEY` | ✅ Yes | Your Google Gemini API key. Every AI feature in this app depends on it — without it, AI calls will fail with an authentication error. Get one at [Google AI Studio](https://aistudio.google.com/app/apikey). |
+| Variable           | Required | Description                                                                                                                                                                                                 |
+| ------------------ | :------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GEMINI_API_KEY` |  ✅ Yes  | Your Google Gemini API key. Every AI feature in this app depends on it — without it, AI calls will fail with an authentication error. Get one at[Google AI Studio](https://aistudio.google.com/app/apikey). |
 
 > This is currently the **only** environment variable the application reads. Firebase Authentication/Firestore are not yet wired up (see [Future Improvements](#-future-improvements)) — when they are, their config variables will be documented here.
 
@@ -271,16 +315,16 @@ npm run genkit:watch   # auto-restart on flow file changes
 
 ## 📘 Usage
 
-| Feature | How to use it |
-|---|---|
-| **Guidance Quiz** | Select a few interests and personality traits, then click *Get My Recommendation* for an AI-suggested engineering specialization with reasoning. |
-| **Career Pathway** | Enter a career goal and current skills, then generate a milestone-based roadmap rendered as a visual timeline. |
-| **Project Ideas** | Enter a field of interest to get 3–4 AI-generated project ideas with suggested technologies. |
-| **Resume Builder** | Paste your existing resume content to generate a polished professional summary; the pasted content is remembered for the Internship flow too. |
-| **AI Mentor** | Ask any open-ended career question in the chat. Failed messages stay visible with a **Retry** button — nothing is silently lost. |
-| **Internships** | Switch between *AI Recommendations* (personalized, based on skills/interest/location) and *Browse All*. Click **View Details** or **Apply Now** on any card to open the Apply workspace — get a resume match score, generate a cover letter, bookmark it, or mark it applied. |
-| **Colleges** | Search by name, city, or state, or filter by branch tag. Click **View Details** for admission exam info and a link to the college's official site. |
-| **Settings** | Update your profile info from its own dedicated page (`/settings`), reachable from the sidebar or header menu. |
+| Feature                  | How to use it                                                                                                                                                                                                                                                                                 |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Guidance Quiz**  | Select a few interests and personality traits, then click*Get My Recommendation* for an AI-suggested engineering specialization with reasoning.                                                                                                                                             |
+| **Career Pathway** | Enter a career goal and current skills, then generate a milestone-based roadmap rendered as a visual timeline.                                                                                                                                                                                |
+| **Project Ideas**  | Enter a field of interest to get 3–4 AI-generated project ideas with suggested technologies.                                                                                                                                                                                                 |
+| **Resume Builder** | Paste your existing resume content to generate a polished professional summary; the pasted content is remembered for the Internship flow too.                                                                                                                                                 |
+| **AI Mentor**      | Ask any open-ended career question in the chat. Failed messages stay visible with a**Retry** button — nothing is silently lost.                                                                                                                                                        |
+| **Internships**    | Switch between*AI Recommendations* (personalized, based on skills/interest/location) and *Browse All*. Click **View Details** or **Apply Now** on any card to open the Apply workspace — get a resume match score, generate a cover letter, bookmark it, or mark it applied. |
+| **Colleges**       | Search by name, city, or state, or filter by branch tag. Click**View Details** for admission exam info and a link to the college's official site.                                                                                                                                       |
+| **Settings**       | Update your profile info from its own dedicated page (`/settings`), reachable from the sidebar or header menu.                                                                                                                                                                              |
 
 ---
 
@@ -384,7 +428,6 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
 ---
 
-
 ## 🎓 What We Learned
 
 This project helped me gain practical experience with
@@ -405,7 +448,3 @@ This project helped me gain practical experience with
 ---
 
 <div align="center">
-
-*Built with ❤️ to help engineering students navigate their career journey.*
-
-</div>
