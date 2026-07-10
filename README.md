@@ -24,7 +24,7 @@
 1. [About](#-about)
 2. [Why I Built CareerLeap AI](#-why-i-built-careerleap-ai)
 3. [Live Demo](#-live-demo)
-4. [Screenshots](#-screenshots)
+4. [Application Walkthrough](#-application-walkthrough)
 5. [Key Features](#-key-features)
 6. [AI Capabilities](#-ai-capabilities)
 7. [Tech Stack](#-tech-stack)
@@ -89,6 +89,7 @@ CareerLeap AI attempts to unify these workflows into one AI-powered platform tha
 
 </div>
 
+> 📌 **Note:** Add real screenshots to `docs/screenshots/` and update the paths above — the app currently redirects `/` straight to the Dashboard, so there is no separate marketing landing page to capture.
 
 ---
 
