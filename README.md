@@ -53,9 +53,9 @@ This repository is a real, working Next.js application — every feature describ
 
 ---
 
-## 💡 Why I Built CareerLeap AI
+## 💡 Why We Built CareerLeap AI
 
-As an engineering student, I noticed that students use multiple disconnected platforms for career guidance, resume building, internship discovery, and project ideas.
+As engineering students, we noticed that students use multiple disconnected platforms for career guidance, resume building, internship discovery, and project ideas.
 
 CareerLeap AI attempts to unify these workflows into one AI-powered platform that helps students throughout their engineering journey—from selecting a specialization to preparing for interviews and applying for internships.
 
@@ -63,9 +63,7 @@ CareerLeap AI attempts to unify these workflows into one AI-powered platform tha
 
 ## 🔴 Live Demo
 
-**[🚀 View Live Demo](https://your-deployment-url.netlify.app)** *(replace with your deployed URL)*
-
-📹 **Demo Video:** *(add a Loom / YouTube walkthrough link here)*
+**[🚀 View Live Demo](https://careerleap-ai-qaqj.onrender.com/dashboard)** 
 
 ---
 
@@ -91,7 +89,6 @@ CareerLeap AI attempts to unify these workflows into one AI-powered platform tha
 
 </div>
 
-> 📌 **Note:** Add real screenshots to `docs/screenshots/` and update the paths above — the app currently redirects `/` straight to the Dashboard, so there is no separate marketing landing page to capture.
 
 ---
 
@@ -342,7 +339,7 @@ src/
 
 ## 🚧 Engineering Challenges
 
-While building CareerLeap AI, I solved several real-world engineering problems:
+While building CareerLeap AI, we solved several real-world engineering problems:
 
 - Secured Gemini API keys using environment variables.
 - Re-enabled strict TypeScript and ESLint checks.
@@ -386,14 +383,6 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
 ---
 
-## 👤 Author
-
-**Tanisha**
-
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white)](https://github.com/Tanisha-1607)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/your-profile)
-
----
 
 ## 🎓 What We Learned
 
