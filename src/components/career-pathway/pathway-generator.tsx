@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { CareerTimeline } from './timeline';
 import type { Milestone } from '@/ai/schemas';
+import { withTimeout } from '@/lib/utils';
 
 const pathwaySchema = z.object({
   careerGoal: z.string().min(3, { message: 'Please enter a career goal.' }),
@@ -39,23 +40,32 @@ export function PathwayGenerator() {
   const onSubmit: SubmitHandler<PathwayFormValues> = async (data) => {
     setIsLoading(true);
     setMilestones([]);
-    
-    const skillsArray = data.currentSkills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
-    const result = await generatePathwayAction({ careerGoal: data.careerGoal, currentSkills: skillsArray });
-    setIsLoading(false);
 
-    if (result.success && result.data?.pathway) {
-      setMilestones(result.data.pathway);
-      toast({
-        title: 'Pathway Generated!',
-        description: 'Your new AI-powered career pathway is ready.',
-      });
-    } else {
+    try {
+      const skillsArray = data.currentSkills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+      const result = await withTimeout(generatePathwayAction({ careerGoal: data.careerGoal, currentSkills: skillsArray }));
+
+      if (result.success && result.data?.pathway) {
+        setMilestones(result.data.pathway);
+        toast({
+          title: 'Pathway Generated!',
+          description: 'Your new AI-powered career pathway is ready.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: result.error || 'Failed to generate pathway.',
+        });
+      }
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: result.error || 'Failed to generate pathway.',
+        description: error instanceof Error ? error.message : 'Failed to generate pathway.',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 

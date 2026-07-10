@@ -21,7 +21,16 @@ import { useToast } from '@/hooks/use-toast';
 type Plan = 'monthly' | 'quarterly' | 'yearly';
 type View = 'features' | 'pricing';
 
-const plans = {
+type PricingPlan = {
+  id: Plan;
+  name: string;
+  price: string;
+  billing: string;
+  value: number;
+  tag?: string;
+};
+
+const plans: Record<Plan, PricingPlan> = {
   monthly: {
     id: 'monthly',
     name: 'Monthly',

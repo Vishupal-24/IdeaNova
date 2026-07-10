@@ -1,6 +1,5 @@
 
 import {z} from 'genkit';
-import { internshipData } from '@/components/internships/internship-data';
 
 // Schemas for suggest-stream flow
 export const SuggestStreamInputSchema = z.object({
@@ -19,7 +18,7 @@ export type SuggestStreamOutput = z.infer<typeof SuggestStreamOutputSchema>;
 
 // Schemas for suggest-career-pathway flow
 const MilestoneSchema = z.object({
-  type: z.enum(['course', 'project', 'internship', 'skill']),
+  type: z.string().describe("The milestone category, e.g. 'course', 'project', 'internship', or 'skill'."),
   title: z.string().describe('The title of the milestone.'),
   duration: z.string().describe('An estimated duration to complete the milestone, e.g., "3 weeks", "2 months".'),
   description: z.string().describe('A short description of the milestone and why it is important.'),
@@ -102,10 +101,24 @@ export const SuggestInternshipsInputSchema = z.object({
 });
 export type SuggestInternshipsInput = z.infer<typeof SuggestInternshipsInputSchema>;
 
+export const InternshipSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  company: z.string(),
+  location: z.string(),
+  type: z.enum(['On-site', 'Remote']),
+  stipend: z.string(),
+  duration: z.string(),
+  requiredSkills: z.array(z.string()),
+  eligibility: z.string(),
+  logo: z.string(),
+  dataAiHint: z.string(),
+  description: z.string(),
+  applicationUrl: z.string(),
+});
+
 const InternshipRecommendationSchema = z.object({
-  internship: z.object(
-    Object.fromEntries(Object.keys(internshipData[0]).map(key => [key, z.any()]))
-  ),
+  internship: InternshipSchema,
   matchStrength: z.enum(['good', 'moderate', 'low']).describe('The strength of the match for the candidate.'),
   reason: z.string().describe('A brief reason for the recommendation.'),
 });
@@ -116,3 +129,32 @@ export const SuggestInternshipsOutputSchema = z.object({
   recommendations: z.array(InternshipRecommendationSchema).describe('A list of 3-5 recommended internships that best match the candidate\'s profile.'),
 });
 export type SuggestInternshipsOutput = z.infer<typeof SuggestInternshipsOutputSchema>;
+
+
+// Schemas for match-resume-to-internship flow
+export const MatchResumeToInternshipInputSchema = z.object({
+  resumeContent: z.string().describe('The full text of the candidate\'s resume.'),
+  internship: InternshipSchema.describe('The internship to evaluate the resume against.'),
+});
+export type MatchResumeToInternshipInput = z.infer<typeof MatchResumeToInternshipInputSchema>;
+
+export const MatchResumeToInternshipOutputSchema = z.object({
+  score: z.number().min(0).max(100).describe('An overall match score from 0-100.'),
+  matchStrength: z.enum(['good', 'moderate', 'low']).describe('The overall strength of the match.'),
+  strengths: z.array(z.string()).describe('2-3 concrete ways the resume aligns with this internship.'),
+  gaps: z.array(z.string()).describe('1-2 concrete skills or experiences the candidate is missing for this internship.'),
+});
+export type MatchResumeToInternshipOutput = z.infer<typeof MatchResumeToInternshipOutputSchema>;
+
+
+// Schemas for generate-cover-letter flow
+export const GenerateCoverLetterInputSchema = z.object({
+  resumeContent: z.string().describe('The full text of the candidate\'s resume.'),
+  internship: InternshipSchema.describe('The internship the cover letter is being written for.'),
+});
+export type GenerateCoverLetterInput = z.infer<typeof GenerateCoverLetterInputSchema>;
+
+export const GenerateCoverLetterOutputSchema = z.object({
+  coverLetter: z.string().describe('A complete, ready-to-edit cover letter draft, 250-400 words.'),
+});
+export type GenerateCoverLetterOutput = z.infer<typeof GenerateCoverLetterOutputSchema>;

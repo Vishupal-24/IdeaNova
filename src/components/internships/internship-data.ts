@@ -1,4 +1,5 @@
 export type Internship = {
+  id: string;
   title: string;
   company: string;
   location: string;
@@ -9,10 +10,13 @@ export type Internship = {
   eligibility: string;
   logo: string;
   dataAiHint: string;
+  description: string;
+  applicationUrl: string;
 };
 
 export const internshipData: Internship[] = [
   {
+    id: 'tcs-software-development-intern',
     title: 'Software Development Intern',
     company: 'TATA CONSULTANCY SERVICES LIMITED',
     location: 'Pune, Maharashtra',
@@ -23,8 +27,11 @@ export const internshipData: Internship[] = [
     eligibility: 'Final Year Engineering Students',
     logo: 'https://picsum.photos/seed/tcs/100',
     dataAiHint: 'modern office building',
+    description: 'Join a backend engineering team building enterprise Java services used by clients across banking and retail. You will work on REST APIs, database schema design, and unit testing under the guidance of senior engineers.',
+    applicationUrl: 'https://www.tcs.com/careers',
   },
   {
+    id: 'jio-data-science-intern',
     title: 'Data Science Intern',
     company: 'RELIANCE JIO INFOCOMM LIMITED',
     location: 'Remote',
@@ -35,8 +42,11 @@ export const internshipData: Internship[] = [
     eligibility: 'B.Tech/M.Tech Students',
     logo: 'https://picsum.photos/seed/jio/100',
     dataAiHint: 'abstract data network',
+    description: 'Work with the analytics team to build predictive models on large-scale telecom usage data. Responsibilities include data cleaning, feature engineering, and presenting findings to product stakeholders.',
+    applicationUrl: 'https://careers.jio.com/',
   },
   {
+    id: 'tata-steel-mechanical-engineer-intern',
     title: 'Mechanical Engineer Intern',
     company: 'TATA STEEL LIMITED',
     location: 'Jamshedpur, Jharkhand',
@@ -47,8 +57,11 @@ export const internshipData: Internship[] = [
     eligibility: '3rd & 4th Year Mechanical Engg.',
     logo: 'https://picsum.photos/seed/tatasteel/100',
     dataAiHint: 'steel factory molten',
+    description: 'Support the plant engineering team with equipment design reviews, CAD modeling, and thermal efficiency studies on live production lines at one of India\'s largest steel plants.',
+    applicationUrl: 'https://www.tatasteel.com/careers/',
   },
   {
+    id: 'wipro-web-development-intern',
     title: 'Web Development Intern',
     company: 'WIPRO LIMITED',
     location: 'Bengaluru, Karnataka',
@@ -59,8 +72,11 @@ export const internshipData: Internship[] = [
     eligibility: 'Any student with relevant skills',
     logo: 'https://picsum.photos/seed/wipro/100',
     dataAiHint: 'colorful abstract pattern',
+    description: 'Build and ship customer-facing features for an internal enterprise dashboard using React. You will pair with front-end engineers and get exposure to code review and CI/CD practices.',
+    applicationUrl: 'https://careers.wipro.com/',
   },
   {
+    id: 'infosys-ai-ml-intern',
     title: 'AI/ML Intern',
     company: 'INFOSYS LIMITED',
     location: 'Remote',
@@ -71,8 +87,11 @@ export const internshipData: Internship[] = [
     eligibility: 'Final Year CS/IT Students',
     logo: 'https://picsum.photos/seed/infosys/100',
     dataAiHint: 'blue geometric architecture',
+    description: 'Prototype and evaluate deep learning models for client proof-of-concepts spanning computer vision and NLP. You will document experiments and contribute to an internal model-evaluation library.',
+    applicationUrl: 'https://www.infosys.com/careers.html',
   },
   {
+    id: 'hdfc-finance-intern',
     title: 'Finance Intern',
     company: 'HDFC BANK LIMITED',
     location: 'Mumbai, Maharashtra',
@@ -83,8 +102,11 @@ export const internshipData: Internship[] = [
     eligibility: 'Commerce/MBA Students',
     logo: 'https://picsum.photos/seed/hdfc/100',
     dataAiHint: 'bank building facade',
+    description: 'Assist the corporate finance team with variance analysis, budget modeling in Excel, and preparing summaries for monthly leadership reviews.',
+    applicationUrl: 'https://www.hdfc.bank.in/careers',
   },
-   {
+  {
+    id: 'lnt-cloud-computing-intern',
     title: 'Cloud Computing Intern',
     company: 'LARSEN AND TOUBRO LIMITED',
     location: 'Chennai, Tamil Nadu',
@@ -95,8 +117,11 @@ export const internshipData: Internship[] = [
     eligibility: '3rd & 4th Year Engg. Students',
     logo: 'https://picsum.photos/seed/lnt/100',
     dataAiHint: 'large industrial construction',
+    description: 'Help migrate internal engineering tools to containerized, cloud-hosted infrastructure. You will work with AWS/Azure services and learn production deployment practices.',
+    applicationUrl: 'https://www.larsentoubro.com/corporate/careers/',
   },
   {
+    id: 'techm-product-management-intern',
     title: 'Product Management Intern',
     company: 'TECH MAHINDRA LIMITED',
     location: 'Remote',
@@ -107,5 +132,7 @@ export const internshipData: Internship[] = [
     eligibility: 'MBA or Final Year Engg. Students',
     logo: 'https://picsum.photos/seed/techm/100',
     dataAiHint: 'futuristic technology interface',
+    description: 'Partner with a product squad to run competitor research, draft roadmap documents, and coordinate sprint ceremonies for a client-facing SaaS product.',
+    applicationUrl: 'https://careers.techmahindra.com/',
   },
 ];

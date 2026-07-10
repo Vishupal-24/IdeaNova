@@ -1,9 +1,9 @@
 'use client';
-import { Briefcase, BookOpen, Wrench, Lightbulb, Circle } from 'lucide-react';
+import { Briefcase, BookOpen, Wrench, Lightbulb, Circle, type LucideIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Milestone } from '@/ai/schemas';
 
-const iconMap = {
+const iconMap: Record<string, LucideIcon> = {
     course: BookOpen,
     project: Wrench,
     internship: Briefcase,
@@ -25,7 +25,7 @@ export function CareerTimeline({ milestones }: CareerTimelineProps) {
         <div className="relative pl-6">
           <div className="absolute left-3 top-1 h-full w-0.5 bg-border -translate-x-1/2"></div>
           {milestones.map((item, index) => {
-            const Icon = iconMap[item.type] || Circle;
+            const Icon = iconMap[item.type.trim().toLowerCase()] || Circle;
             const isLast = index === milestones.length - 1;
             return (
                 <div key={index} className={`relative flex items-start gap-6 ${!isLast ? 'pb-10' : ''}`}>

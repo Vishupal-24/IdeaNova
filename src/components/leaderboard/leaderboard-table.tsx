@@ -14,10 +14,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 
 const leaderboardData = [
-  { rank: 1, name: 'Alex Johnson', points: 1850, avatar: 'https://picsum.photos/seed/alex/100', email: 'alex@example.com' },
-  { rank: 2, name: 'Maria Garcia', points: 1600, avatar: 'https://picsum.photos/seed/maria/100', email: 'maria@example.com' },
-  { rank: 3, name: 'Chen Wei', points: 1100, avatar: 'https://picsum.photos/seed/chen/100', email: 'chen@example.com' },
-  { rank: 4, name: 'Samuel Green', points: 950, avatar: 'https://picsum.photos/seed/samuel/100', email: 'samuel@example.com' },
+  { rank: 1, name: 'Alex Johnson', points: 1850, avatar: 'https://picsum.photos/seed/alex/100', email: 'alex@example.com', isCurrentUser: false },
+  { rank: 2, name: 'Maria Garcia', points: 1600, avatar: 'https://picsum.photos/seed/maria/100', email: 'maria@example.com', isCurrentUser: false },
+  { rank: 3, name: 'Chen Wei', points: 1100, avatar: 'https://picsum.photos/seed/chen/100', email: 'chen@example.com', isCurrentUser: false },
+  { rank: 4, name: 'Samuel Green', points: 950, avatar: 'https://picsum.photos/seed/samuel/100', email: 'samuel@example.com', isCurrentUser: false },
 ];
 
 export function LeaderboardTable() {

@@ -1,9 +1,8 @@
 
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import * as React from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Bot,
   Briefcase,
@@ -48,6 +47,9 @@ function AppSidebarComponent() {
   const [activeSection, setActiveSection] = React.useState('dashboard');
   const { isCollapsed, setOpenMobile } = useSidebar();
   const [isPricingDialogOpen, setIsPricingDialogOpen] = React.useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const isDashboard = pathname === '/dashboard';
 
   const handleScrollTo = (id: string) => {
     const element = document.getElementById(id);
@@ -56,17 +58,31 @@ function AppSidebarComponent() {
       const offset = 100;
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - offset;
-      
+
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
 
       setActiveSection(id);
+    }
+    setOpenMobile(false);
+  };
+
+  const handleSectionNav = (id: string) => {
+    if (isDashboard) {
+      handleScrollTo(id);
+    } else {
+      router.push(`/dashboard#${id}`);
       setOpenMobile(false);
     }
   };
-  
+
+  const handleSettingsNav = () => {
+    router.push('/settings');
+    setOpenMobile(false);
+  };
+
   React.useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -76,7 +92,7 @@ function AppSidebarComponent() {
       });
     }, { rootMargin: "-50% 0px -50% 0px" });
 
-    const sections = menuItems.map(item => item.id).concat('settings');
+    const sections = menuItems.map(item => item.id);
     sections.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -117,8 +133,8 @@ function AppSidebarComponent() {
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton
-                  onClick={() => handleScrollTo(item.id)}
-                  isActive={activeSection === item.id}
+                  onClick={() => handleSectionNav(item.id)}
+                  isActive={isDashboard && activeSection === item.id}
                   icon={<item.icon />}
                   tooltip={item.label}
                 >
@@ -132,8 +148,8 @@ function AppSidebarComponent() {
           <div className="p-2 space-y-2">
             <SidebarMenuItem>
               <SidebarMenuButton
-                  onClick={() => handleScrollTo('settings')}
-                  isActive={activeSection === 'settings'}
+                  onClick={handleSettingsNav}
+                  isActive={pathname === '/settings'}
                   icon={<Settings />}
                   tooltip={'Settings'}
               >

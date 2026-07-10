@@ -1,11 +1,16 @@
 
+'use client';
+
+import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Building, Globe, IndianRupee, Clock, GraduationCap, Wrench, CheckCircle2, ShieldAlert, AlertCircle } from "lucide-react";
+import { MapPin, Building, Globe, IndianRupee, Clock, GraduationCap, Wrench, CheckCircle2, ShieldAlert, AlertCircle, Bookmark } from "lucide-react";
 import type { Internship } from "./internship-data";
 import { cn } from "@/lib/utils";
+import { useSavedInternships } from "@/hooks/use-local-id-set";
+import { ApplyDialog } from "./apply-dialog";
 
 type InternshipCardProps = {
   internship: Internship;
@@ -35,13 +40,21 @@ const matchConfig = {
     borderColor: 'border-orange-500/50',
     badgeVariant: 'secondary',
   },
-};
+} as const;
 
 
 export function InternshipCard({ internship, matchStrength, reason }: InternshipCardProps) {
   const { title, company, location, type, stipend, duration, requiredSkills, eligibility, logo, dataAiHint } = internship;
   const matchInfo = matchStrength ? matchConfig[matchStrength] : null;
-  
+  const { has: isSaved, toggle: toggleSaved } = useSavedInternships();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [initialTab, setInitialTab] = useState<'overview' | 'apply'>('overview');
+
+  const openDialog = (tab: 'overview' | 'apply') => {
+    setInitialTab(tab);
+    setDialogOpen(true);
+  };
+
   return (
     <Card className={cn(
       "flex flex-col hover:shadow-xl transition-shadow duration-300 bg-card",
@@ -59,10 +72,19 @@ export function InternshipCard({ internship, matchStrength, reason }: Internship
         <div className="flex-1">
           <CardTitle className="font-headline text-lg leading-tight">{title}</CardTitle>
           <CardDescription className="flex items-center text-sm pt-1">
-            <Building className="mr-1.5 h-4 w-4" /> 
+            <Building className="mr-1.5 h-4 w-4" />
             {company}
           </CardDescription>
         </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="shrink-0 -mt-1 -mr-2"
+          onClick={() => toggleSaved(internship.id)}
+          aria-label={isSaved(internship.id) ? 'Remove from saved' : 'Save internship'}
+        >
+          <Bookmark className={cn('h-5 w-5', isSaved(internship.id) && 'fill-primary text-primary')} />
+        </Button>
       </CardHeader>
       <CardContent className="flex-grow space-y-4">
         {matchInfo && (
@@ -93,7 +115,7 @@ export function InternshipCard({ internship, matchStrength, reason }: Internship
             <span className="truncate">{eligibility}</span>
           </div>
         </div>
-        
+
         <div>
             <h4 className="font-semibold text-sm mb-2 flex items-center gap-2"><Wrench className="h-4 w-4 text-muted-foreground"/> Required Skills</h4>
             <div className="flex flex-wrap gap-2">
@@ -104,11 +126,20 @@ export function InternshipCard({ internship, matchStrength, reason }: Internship
         </div>
 
       </CardContent>
-      <CardFooter>
-        <Button className="w-full">
+      <CardFooter className="gap-2">
+        <Button variant="outline" className="flex-1" onClick={() => openDialog('overview')}>
+            View Details
+        </Button>
+        <Button className="flex-1" onClick={() => openDialog('apply')}>
             Apply Now
         </Button>
       </CardFooter>
+      <ApplyDialog
+        internship={internship}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        initialTab={initialTab}
+      />
     </Card>
   );
 }

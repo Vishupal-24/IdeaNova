@@ -10,8 +10,9 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {z} from 'genkit';
 import type { SuggestInternshipsInput, SuggestInternshipsOutput } from '@/ai/schemas';
-import { SuggestInternshipsInputSchema, SuggestInternshipsOutputSchema } from '@/ai/schemas';
+import { SuggestInternshipsInputSchema, SuggestInternshipsOutputSchema, InternshipSchema } from '@/ai/schemas';
 import { internshipData } from '@/components/internships/internship-data';
 
 export async function suggestInternships(
@@ -20,9 +21,13 @@ export async function suggestInternships(
   return suggestInternshipsFlow(input);
 }
 
+const PromptInputSchema = SuggestInternshipsInputSchema.extend({
+  internshipData: z.array(InternshipSchema),
+});
+
 const prompt = ai.definePrompt({
   name: 'suggestInternshipsPrompt',
-  input: {schema: SuggestInternshipsInputSchema},
+  input: {schema: PromptInputSchema},
   output: {schema: SuggestInternshipsOutputSchema},
   prompt: `You are an AI-powered internship recommendation engine for the PM Internship Scheme portal.
 Your goal is to act as a lightweight, rule-based scoring system to help candidates, many of whom are first-generation learners with limited digital exposure, find suitable internships.

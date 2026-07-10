@@ -14,6 +14,7 @@ import { Sparkles, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { ProjectIdeaCard } from './project-idea-card';
 import type { ProjectIdea } from '@/ai/schemas';
+import { withTimeout } from '@/lib/utils';
 
 const projectIdeaSchema = z.object({
   fieldOfInterest: z.string().min(3, { message: 'Please enter a field of interest.' }),
@@ -36,22 +37,31 @@ export function ProjectIdeaGenerator() {
   const onSubmit: SubmitHandler<ProjectIdeaFormValues> = async (data) => {
     setIsLoading(true);
     setProjectIdeas([]);
-    
-    const result = await getProjectIdeas(data);
-    setIsLoading(false);
 
-    if (result.success && result.data?.projects) {
-      setProjectIdeas(result.data.projects);
-      toast({
-        title: 'Project Ideas Generated!',
-        description: 'Your new AI-powered project ideas are ready.',
-      });
-    } else {
+    try {
+      const result = await withTimeout(getProjectIdeas(data));
+
+      if (result.success && result.data?.projects) {
+        setProjectIdeas(result.data.projects);
+        toast({
+          title: 'Project Ideas Generated!',
+          description: 'Your new AI-powered project ideas are ready.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: result.error || 'Failed to generate project ideas.',
+        });
+      }
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: result.error || 'Failed to generate project ideas.',
+        description: error instanceof Error ? error.message : 'Failed to generate project ideas.',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 

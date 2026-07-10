@@ -12,7 +12,6 @@ import { ResumeForm } from '@/components/resume-builder/resume-form';
 import { ChatInterface } from '@/components/career-mentor/chat-interface';
 import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table';
 import { GamificationElements } from '@/components/leaderboard/gamification-elements';
-import { UserProfileForm } from '@/components/user/user-profile-form';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { InternshipBoard } from '@/components/internships/internship-board';
 import { ProjectIdeaGenerator } from '@/components/projects/project-idea-generator';
@@ -127,8 +126,8 @@ export default function DashboardPage() {
         <ResumeForm />
       </section>
 
-      <section id="mentor" className="h-[85vh] mt-[-4rem] pt-[5rem]">
-         <Card className="mb-8">
+      <section id="mentor" className="flex h-[85vh] flex-col mt-[-4rem] pt-[5rem]">
+         <Card className="mb-8 shrink-0">
           <CardHeader>
             <CardTitle className="font-headline text-3xl">AI Engineering Career Mentor</CardTitle>
             <CardDescription>
@@ -136,7 +135,7 @@ export default function DashboardPage() {
             </CardDescription>
           </CardHeader>
         </Card>
-        <div className="h-full flex-grow pb-16">
+        <div className="min-h-0 flex-1">
           <ChatInterface />
         </div>
       </section>
@@ -156,18 +155,6 @@ export default function DashboardPage() {
         <div className="mt-8">
           <LeaderboardTable />
         </div>
-      </section>
-
-      <section id="settings" className="mt-[-4rem] pt-[5rem]">
-        <Card>
-          <CardHeader>
-            <CardTitle className="font-headline text-3xl">Settings</CardTitle>
-            <CardDescription>
-              Manage your account settings, profile information, and preferences.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-        <UserProfileForm />
       </section>
     </div>
   );

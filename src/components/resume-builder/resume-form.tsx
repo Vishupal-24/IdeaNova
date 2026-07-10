@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { useToast } from '@/hooks/use-toast';
 import { generateSummaryAction } from '@/app/(app)/resume/actions';
 import { Sparkles, Clipboard, Loader2 } from 'lucide-react';
+import { withTimeout } from '@/lib/utils';
 
 const resumeSchema = z.object({
   resumeContent: z.string().min(100, { message: 'Please provide at least 100 characters of resume content.' }),
@@ -35,21 +36,31 @@ export function ResumeForm() {
   const onSubmit: SubmitHandler<ResumeFormValues> = async (data) => {
     setIsLoading(true);
     setSummary('');
-    const result = await generateSummaryAction(data.resumeContent);
-    setIsLoading(false);
 
-    if (result.success && result.summary) {
-      setSummary(result.summary);
-      toast({
-        title: 'Summary Generated!',
-        description: 'Your new AI-powered summary is ready.',
-      });
-    } else {
+    try {
+      const result = await withTimeout(generateSummaryAction(data.resumeContent));
+
+      if (result.success && result.summary) {
+        setSummary(result.summary);
+        toast({
+          title: 'Summary Generated!',
+          description: 'Your new AI-powered summary is ready.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: result.error || 'Failed to generate summary.',
+        });
+      }
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: result.error || 'Failed to generate summary.',
+        description: error instanceof Error ? error.message : 'Failed to generate summary.',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 

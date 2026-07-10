@@ -21,7 +21,7 @@ export function WelcomeBanner() {
         <div className="space-y-2">
           <CardTitle className="font-headline text-3xl">Welcome Back, Engineer!</CardTitle>
           <CardDescription className="text-primary-foreground/80 max-w-lg">
-            Ready to take the next leap in your engineering career? Let's make progress today. Your personalized recommendations and pathway are waiting.
+            Ready to take the next leap in your engineering career? Let&apos;s make progress today. Your personalized recommendations and pathway are waiting.
           </CardDescription>
         </div>
         <Button asChild variant="secondary" size="lg" className="shrink-0" onClick={() => handleScrollTo('pathway')}>

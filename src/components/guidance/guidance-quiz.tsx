@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -12,8 +12,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useToast } from '@/hooks/use-toast';
 import { getStreamSuggestion } from '@/app/(app)/guidance/actions';
 import type { SuggestStreamOutput } from '@/ai/schemas';
-import { Loader2, Sparkles, Wand2 } from 'lucide-react';
+import { Loader2, Wand2 } from 'lucide-react';
 import { ResultCard } from './result-card';
+import { withTimeout } from '@/lib/utils';
 
 const interests = [
   { id: 'robotics', label: 'Robotics and Automation' },
@@ -60,22 +61,31 @@ export function GuidanceQuiz() {
     setIsLoading(true);
     setResult(null);
 
-    const response = await getStreamSuggestion(data);
+    try {
+      const response = await withTimeout(getStreamSuggestion(data));
 
-    if (response.success && response.data) {
-      setResult(response.data);
-      toast({
-        title: 'Recommendation Ready!',
-        description: 'We have a personalized specialization suggestion for you.',
-      });
-    } else {
+      if (response.success && response.data) {
+        setResult(response.data);
+        toast({
+          title: 'Recommendation Ready!',
+          description: 'We have a personalized specialization suggestion for you.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: response.error || 'Failed to get a recommendation.',
+        });
+      }
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: response.error || 'Failed to get a recommendation.',
+        description: error instanceof Error ? error.message : 'Failed to get a recommendation.',
       });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

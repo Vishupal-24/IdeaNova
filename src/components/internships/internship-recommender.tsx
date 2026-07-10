@@ -14,6 +14,7 @@ import { Sparkles, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import type { InternshipRecommendation } from '@/ai/schemas';
 import { InternshipCard } from './internship-card';
+import { withTimeout } from '@/lib/utils';
 
 const recommendationSchema = z.object({
   skills: z.string().min(3, { message: 'Please enter at least one skill.' }),
@@ -40,22 +41,31 @@ export function InternshipRecommender() {
   const onSubmit: SubmitHandler<RecommendationFormValues> = async (data) => {
     setIsLoading(true);
     setRecommendedInternships([]);
-    
-    const result = await getInternshipRecommendations(data);
-    setIsLoading(false);
 
-    if (result.success && result.data?.recommendations) {
-      setRecommendedInternships(result.data.recommendations);
-      toast({
-        title: 'Recommendations Ready!',
-        description: 'Your personalized internship suggestions are here.',
-      });
-    } else {
+    try {
+      const result = await withTimeout(getInternshipRecommendations(data));
+
+      if (result.success && result.data?.recommendations) {
+        setRecommendedInternships(result.data.recommendations);
+        toast({
+          title: 'Recommendations Ready!',
+          description: 'Your personalized internship suggestions are here.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: result.error || 'Failed to get recommendations.',
+        });
+      }
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: result.error || 'Failed to get recommendations.',
+        description: error instanceof Error ? error.message : 'Failed to get recommendations.',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -135,9 +145,9 @@ export function InternshipRecommender() {
         <div>
             <h2 className="text-2xl font-headline mb-4">Here are your Top Recommendations:</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {recommendedInternships.map((rec, index) => (
-                    <InternshipCard 
-                      key={index} 
+                {recommendedInternships.map((rec) => (
+                    <InternshipCard
+                      key={rec.internship.id}
                       internship={rec.internship}
                       matchStrength={rec.matchStrength}
                       reason={rec.reason}

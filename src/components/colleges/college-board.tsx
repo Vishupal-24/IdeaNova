@@ -1,68 +1,80 @@
 
+'use client';
+
+import { useMemo, useState } from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { CollegeCard } from "./college-card";
+import { collegeData } from "./college-data";
 
-const colleges = [
-  {
-    name: 'IIT Bombay',
-    city: 'Mumbai',
-    state: 'Maharashtra',
-    tags: ['CSE', 'Mechanical', 'Electrical', 'Civil', 'Aerospace'],
-    logo: 'https://picsum.photos/seed/iitb/100',
-    dataAiHint: 'modern campus building'
-  },
-  {
-    name: 'IIT Delhi',
-    city: 'New Delhi',
-    state: 'Delhi',
-    tags: ['Computer Science', 'Biochemical', 'Textile', 'Chemical'],
-    logo: 'https://picsum.photos/seed/iitd/100',
-    dataAiHint: 'university main gate'
-  },
-  {
-    name: 'BITS Pilani',
-    city: 'Pilani',
-    state: 'Rajasthan',
-    tags: ['Electronics', 'Mechanical', 'IT', 'Pharmacy'],
-    logo: 'https://picsum.photos/seed/bitsp/100',
-    dataAiHint: 'clock tower campus'
-  },
-  {
-    name: 'NIT Trichy',
-    city: 'Tiruchirappalli',
-    state: 'Tamil Nadu',
-    tags: ['Production Engg', 'Instrumentation', 'Metallurgical'],
-    logo: 'https://picsum.photos/seed/nitt/100',
-    dataAiHint: 'abstract tech pattern'
-  },
-    {
-    name: 'VIT Vellore',
-    city: 'Vellore',
-    state: 'Tamil Nadu',
-    tags: ['Information Tech', 'Electronics', 'Bioinformatics'],
-    logo: 'https://picsum.photos/seed/vit/100',
-    dataAiHint: 'futuristic architecture'
-  },
-    {
-    name: 'Malaviya National Institute of Technology',
-    city: 'Jaipur',
-    state: 'Rajasthan',
-    tags: ['MNIT', 'Civil', 'Architecture'],
-    logo: 'https://picsum.photos/seed/mnit/100',
-    dataAiHint: 'campus library building'
-  },
-];
+export function CollegeBoard() {
+  const [query, setQuery] = useState("");
+  const [activeTag, setActiveTag] = useState<string | null>(null);
 
-type CollegeBoardProps = {
-  minimal?: boolean;
-}
+  const allTags = useMemo(() => {
+    const tagSet = new Set<string>();
+    collegeData.forEach((college) => college.tags.forEach((tag) => tagSet.add(tag)));
+    return Array.from(tagSet).sort();
+  }, []);
 
-export function CollegeBoard({ minimal = false }: CollegeBoardProps) {
-  const displayColleges = minimal ? colleges.slice(0, 3) : colleges;
+  const filteredColleges = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    return collegeData.filter((college) => {
+      const matchesQuery =
+        !normalizedQuery ||
+        college.name.toLowerCase().includes(normalizedQuery) ||
+        college.city.toLowerCase().includes(normalizedQuery) ||
+        college.state.toLowerCase().includes(normalizedQuery);
+      const matchesTag = !activeTag || college.tags.includes(activeTag);
+      return matchesQuery && matchesTag;
+    });
+  }, [query, activeTag]);
+
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {displayColleges.map((college, index) => (
-        <CollegeCard key={index} {...college} />
-      ))}
+    <div className="space-y-4">
+      <div className="space-y-3">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by college name, city, or state..."
+            className="pl-8"
+          />
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Badge
+            variant={activeTag === null ? "default" : "secondary"}
+            className="cursor-pointer"
+            onClick={() => setActiveTag(null)}
+          >
+            All Branches
+          </Badge>
+          {allTags.map((tag) => (
+            <Badge
+              key={tag}
+              variant={activeTag === tag ? "default" : "secondary"}
+              className="cursor-pointer"
+              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
+
+      {filteredColleges.length === 0 ? (
+        <p className="text-sm text-muted-foreground text-center py-12">
+          No colleges match your search. Try a different keyword or branch.
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredColleges.map((college) => (
+            <CollegeCard key={college.id} college={college} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
