@@ -54,7 +54,6 @@ CareerLeap AI attempts to unify these workflows into one AI-powered platform tha
 ## 📸 Application Walkthrough
 
 A guided tour through CareerLeap AI's core screens, from the first dashboard view to internship applications.
-*(Screenshots below are placeholders — add real captures to `docs/screenshots/` before publishing.)*
 
 ---
 
@@ -64,6 +63,16 @@ The landing view after opening the app. It surfaces a skills-progress chart, qui
 
 <p align="center">
   <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="900">
+</p>
+
+---
+
+### 🧭 Guidance
+
+An interactive quiz mapping a student's interests and personality traits to an AI-recommended engineering specialization, with reasoning and a list of career pathways the recommended stream opens up.
+
+<p align="center">
+  <img src="docs/screenshots/guidance.png" alt="Guidance" width="900">
 </p>
 
 ---
@@ -206,7 +215,11 @@ This means every model response is **schema-validated** before it ever reaches t
 
 </details>
 
-The model is configured once, in `src/ai/genkit.ts`, and shared by every flow — currently pointed at `googleai/gemini-flash-latest` (Google's self-maintained alias for the current recommended Flash model, chosen specifically so this project doesn't silently break when a dated model version is retired).
+The primary model is configured once, in `src/ai/genkit.ts`, and shared by every flow — currently pointed at `googleai/gemini-flash-latest` (Google's self-maintained alias for the current recommended Flash model, chosen specifically so this project doesn't silently break when a dated model version is retired).
+
+### 🔀 Hybrid provider fallback
+
+Every flow is wrapped by `generateWithFallback()` (`src/ai/with-fallback.ts`), which races the same Genkit prompt against a 12-second window. If Gemini is under high demand and doesn't respond in time — or errors — the *exact same* prompt template and Zod schema are immediately re-run against **Groq's Llama 3.3 70B** model (via the [`genkitx-groq`](https://www.npmjs.com/package/genkitx-groq) plugin) instead. No prompt logic is duplicated between providers; only the model reference changes. This is fully optional — if `GROQ_API_KEY` isn't set, the app behaves exactly as before and simply waits on Gemini.
 
 ---
 
@@ -220,7 +233,7 @@ The model is configured once, in `src/ai/genkit.ts`, and shared by every flow �
 | **Styling**            | [Tailwind CSS](https://tailwindcss.com/)                                 |
 | **Component Library**  | [shadcn/ui](https://ui.shadcn.com/) (built on Radix UI primitives)       |
 | **AI Orchestration**   | [Firebase Genkit](https://firebase.google.com/docs/genkit)               |
-| **LLM Provider**       | [Google Gemini](https://ai.google.dev/) via `@genkit-ai/googleai`      |
+| **LLM Provider**       | [Google Gemini](https://ai.google.dev/) via `@genkit-ai/googleai` (primary), with automatic fallback to [Groq](https://groq.com/) via `genkitx-groq` |
 | **Forms & Validation** | [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) |
 | **Icons**              | [Lucide React](https://lucide.dev/)                                      |
 | **Charts**             | [Recharts](https://recharts.org/)                                        |
@@ -240,17 +253,21 @@ flowchart TD
     A[👤 User] --> B[Next.js UI<br/>Client Component]
     B --> C[Server Action<br/>'use server']
     C --> D[Genkit Flow<br/>Zod-validated Prompt]
-    D --> E[Google Gemini<br/>gemini-flash-latest]
-    E --> D
+    D --> E{Gemini responds<br/>within 12s?}
+    E -->|Yes| F[Google Gemini<br/>gemini-flash-latest]
+    E -->|No / error| G[Groq fallback<br/>Llama 3.3 70B]
+    F --> D
+    G --> D
     D --> C
     C --> B
-    B --> F[✅ Response<br/>rendered in UI]
+    B --> H[✅ Response<br/>rendered in UI]
 ```
 
 - **Next.js UI** — a React Client Component collects input (a form, a chat message) and calls a Server Action directly — no separate REST API layer exists.
 - **Server Action** — a `'use server'` function wraps the corresponding Genkit flow in a `try/catch`, always returning a `{ success, data, error }` envelope so the UI never has to handle a raw thrown exception.
-- **Genkit Flow** — defines the prompt template and a Zod input/output schema; Genkit rejects any Gemini response that doesn't match the schema.
-- **Response** — the client applies a request timeout (60s) around every call, so a slow or failed model response always resolves into a toast + retry option instead of an indefinitely spinning UI.
+- **Genkit Flow** — defines the prompt template and a Zod input/output schema; Genkit rejects any response — from either provider — that doesn't match the schema.
+- **Hybrid fallback** — `generateWithFallback()` gives Gemini 12 seconds; if it's too slow or errors, the same prompt reruns against Groq instead (see [Hybrid provider fallback](#-ai-capabilities)).
+- **Response** — the client separately applies its own 60-second request timeout around every call, so even a doubled (Gemini + Groq) attempt that's still slow always resolves into a toast + retry option instead of an indefinitely spinning UI.
 
 ---
 
@@ -261,6 +278,7 @@ flowchart TD
 - **Node.js** v18.0.0 or higher
 - **npm** (or your package manager of choice)
 - A **Google Gemini API key** — get one free at [Google AI Studio](https://aistudio.google.com/app/apikey)
+- *(Optional)* A **Groq API key** — get one free at [Groq Console](https://console.groq.com/keys) to enable automatic fallback when Gemini is slow
 
 ### Setup
 
@@ -276,10 +294,11 @@ npm install
 cp .env.local.example .env.local   # or create .env.local manually — see below
 ```
 
-Add your Gemini key to `.env.local`:
+Add your Gemini key to `.env.local` (and optionally your Groq key, for the hybrid fallback):
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ```bash
@@ -307,9 +326,10 @@ npm run genkit:watch   # auto-restart on flow file changes
 
 | Variable           | Required | Description                                                                                                                                                                                                 |
 | ------------------ | :------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GEMINI_API_KEY` |  ✅ Yes  | Your Google Gemini API key. Every AI feature in this app depends on it — without it, AI calls will fail with an authentication error. Get one at[Google AI Studio](https://aistudio.google.com/app/apikey). |
+| `GEMINI_API_KEY` |  ✅ Yes  | Your Google Gemini API key. Every AI feature in this app depends on it — without it, AI calls will fail with an authentication error. Get one at [Google AI Studio](https://aistudio.google.com/app/apikey). |
+| `GROQ_API_KEY` | ⚪ Optional | Enables the hybrid fallback — if Gemini is slow (>12s) or errors, the same request is retried against Groq's Llama 3.3 70B model. Without it, the app works exactly the same, it just waits on Gemini only. Get one free at [Groq Console](https://console.groq.com/keys). |
 
-> This is currently the **only** environment variable the application reads. Firebase Authentication/Firestore are not yet wired up (see [Future Improvements](#-future-improvements)) — when they are, their config variables will be documented here.
+> Firebase Authentication/Firestore are not yet wired up (see [Future Improvements](#-future-improvements)) — when they are, their config variables will be documented here.
 
 ---
 
@@ -376,6 +396,7 @@ src/
 - ✅ **ESLint enabled** (`next/core-web-vitals` + `next/typescript`) — `npm run lint` passes clean
 - ✅ **Production build verified** — `npm run build` succeeds with no warnings beyond a benign third-party dependency notice
 - ✅ **Resilient AI calls** — every model request is wrapped in a 60-second timeout with try/catch/finally, so a slow or failed call always resolves gracefully instead of leaving the UI stuck loading
+- ✅ **Hybrid provider fallback** — every flow automatically retries against Groq if Gemini doesn't respond within 12 seconds, with zero duplicated prompt logic
 - ✅ **Consistent architecture** — all 8 AI features share the identical schema → flow → action → hook pattern, making the codebase predictable to navigate and extend
 - ✅ **Fully responsive** — mobile sheet navigation, responsive grid layouts throughout
 - ✅ **Dark/light theme support** via CSS variables and `next-themes`

@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import type { SuggestResumeSummaryInput, SuggestResumeSummaryOutput } from '@/ai/schemas';
 import { SuggestResumeSummaryInputSchema, SuggestResumeSummaryOutputSchema } from '@/ai/schemas';
 
@@ -35,7 +36,7 @@ const suggestResumeSummaryFlow = ai.defineFlow(
     outputSchema: SuggestResumeSummaryOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await generateWithFallback(prompt, input, SuggestResumeSummaryOutputSchema);
     return output!;
   }
 );

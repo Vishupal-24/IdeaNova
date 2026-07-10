@@ -10,6 +10,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import type { SuggestStreamInput, SuggestStreamOutput } from '@/ai/schemas';
 import { SuggestStreamInputSchema, SuggestStreamOutputSchema } from '@/ai/schemas';
 
@@ -47,7 +48,7 @@ const suggestStreamFlow = ai.defineFlow(
     outputSchema: SuggestStreamOutputSchema,
   },
   async (input) => {
-    const {output} = await prompt(input);
+    const {output} = await generateWithFallback(prompt, input, SuggestStreamOutputSchema);
     return output!;
   }
 );

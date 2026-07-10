@@ -10,6 +10,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import type { SuggestCareerPathwayInput, SuggestCareerPathwayOutput } from '@/ai/schemas';
 import { SuggestCareerPathwayInputSchema, SuggestCareerPathwayOutputSchema } from '@/ai/schemas';
 
@@ -49,7 +50,7 @@ const suggestCareerPathwayFlow = ai.defineFlow(
     outputSchema: SuggestCareerPathwayOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await generateWithFallback(prompt, input, SuggestCareerPathwayOutputSchema);
     return output!;
   }
 );

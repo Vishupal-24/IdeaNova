@@ -10,6 +10,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import type { MatchResumeToInternshipInput, MatchResumeToInternshipOutput } from '@/ai/schemas';
 import { MatchResumeToInternshipInputSchema, MatchResumeToInternshipOutputSchema } from '@/ai/schemas';
 
@@ -53,7 +54,7 @@ const matchResumeToInternshipFlow = ai.defineFlow(
     outputSchema: MatchResumeToInternshipOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await generateWithFallback(prompt, input, MatchResumeToInternshipOutputSchema);
     return output!;
   }
 );

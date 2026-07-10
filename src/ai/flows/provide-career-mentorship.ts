@@ -12,6 +12,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import type { ProvideCareerMentorshipInput, ProvideCareerMentorshipOutput } from '@/ai/schemas';
 import { ProvideCareerMentorshipInputSchema, ProvideCareerMentorshipOutputSchema } from '@/ai/schemas';
 
@@ -44,7 +45,7 @@ const provideCareerMentorshipFlow = ai.defineFlow(
     outputSchema: ProvideCareerMentorshipOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await generateWithFallback(prompt, input, ProvideCareerMentorshipOutputSchema);
     return output!;
   }
 );

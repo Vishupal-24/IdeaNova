@@ -10,6 +10,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import type { GenerateCoverLetterInput, GenerateCoverLetterOutput } from '@/ai/schemas';
 import { GenerateCoverLetterInputSchema, GenerateCoverLetterOutputSchema } from '@/ai/schemas';
 
@@ -52,7 +53,7 @@ const generateCoverLetterFlow = ai.defineFlow(
     outputSchema: GenerateCoverLetterOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await generateWithFallback(prompt, input, GenerateCoverLetterOutputSchema);
     return output!;
   }
 );

@@ -10,6 +10,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { generateWithFallback } from '@/ai/with-fallback';
 import {z} from 'genkit';
 import type { SuggestInternshipsInput, SuggestInternshipsOutput } from '@/ai/schemas';
 import { SuggestInternshipsInputSchema, SuggestInternshipsOutputSchema, InternshipSchema } from '@/ai/schemas';
@@ -63,7 +64,7 @@ const suggestInternshipsFlow = ai.defineFlow(
     outputSchema: SuggestInternshipsOutputSchema,
   },
   async (input) => {
-    const {output} = await prompt({...input, internshipData});
+    const {output} = await generateWithFallback(prompt, {...input, internshipData}, SuggestInternshipsOutputSchema);
     return output!;
   }
 );
