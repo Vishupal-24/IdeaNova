@@ -395,7 +395,7 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
 ---
 
-## 🎓 What I Learned
+## 🎓 What We Learned
 
 This project helped me gain practical experience with
 
