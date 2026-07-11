@@ -1,6 +1,4 @@
 
-<div align="center">
-
 <details>
 <summary><strong>📚 Table of Contents</strong></summary>
 
@@ -465,7 +463,3 @@ This project helped me gain practical experience with
 - State Management
 - Environment Variables
 - Production Deployment
-
----
-
-<div align="center">
